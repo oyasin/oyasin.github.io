@@ -1,0 +1,14 @@
+/* Color Theme Swatches in Hex */
+.main-container {
+  min-height: 100vh;
+}
+
+.footer {
+  background-color: #64718C;
+  color: #C5D0D9;
+}
+
+.footer .row {
+  height: 16vh;
+}
+/*# sourceMappingURL=style.css.map */
