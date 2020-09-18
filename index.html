@@ -15,17 +15,75 @@
 
 <body>
 
-    <header>
-        <div class="row justify-content-center m-5">
-            <h1>Yasin</h1>
-        </div>
+    <header class="header">
+        <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light shadow-sm">
+            <a class="navbar-brand" href="#">
+                <h1><strong>Yasin</strong></h1>
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
+                data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
     <body>
         <div class="container main-container">
-            <section>
+
+            <section class="container info py-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 info-table order-2 order-md-1">
+                        <h2>Borderless Table</h2>
+                        <p>The .table-borderless class removes borders from the table:</p>
+                        <table class="table table-borderless">
+                            <!-- <thead>
+                                <tr>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                </tr>
+                            </thead> -->
+                            <tbody>
+                                <tr>
+                                    <td>Office</td>
+                                    <td>F04</td>
+                                </tr>
+                                <tr>
+                                    <td>Mailing Address</td>
+                                    <td>Department of Basic Sciences</br>
+                                        Princess Sumaya University for Technology</br>
+                                        Amman, 11941</br>
+                                        Jordan
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>E-mail</td>
+                                    <td>o.yasin@psut.edu.jo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6 order-1 order-md-2">
+                        <div class="row pic justify-content-center align-items-center">
+                            <img src="imgs/undraw_profile_pic_ic5t.svg" class="img-fluid" alt="" width="200"
+                                height="200">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container teaching py-3">
                 <div class="card-deck">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in
@@ -33,7 +91,7 @@
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -41,7 +99,7 @@
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
@@ -53,7 +111,7 @@
                 </div>
             </section>
         </div>
-        <footer class="footer py-3">
+        <footer class="footer bg-dark">
             <div class="row justify-content-center align-items-center">
                 <div class="">Place sticky footer content here.</div>
             </div>
@@ -71,6 +129,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
+    <script src="myscript.js"></script>
 </body>
 
 </html>
