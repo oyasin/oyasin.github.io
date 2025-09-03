@@ -3,8 +3,8 @@ import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
-<header class="sticky top-0 z-10 p-4 sm:p-8 bg-white shadow-md">
-  <nav class="flex items-center justify-between">
+<header class="sticky top-0 z-10 p-4 sm:p-8 bg-white shadow-md mb-8">
+  <nav class="flex justify-between items-center mx-auto gap-16">
     <div><a href="/" class="no-underline">{SITE_TITLE}</a></div>
     <div class="internal-links flex gap-4">
       <HeaderLink href="/blog">Blog</HeaderLink>
