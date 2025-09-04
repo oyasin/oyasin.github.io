@@ -3,9 +3,16 @@ import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
-<header class="sticky top-0 z-10 p-4 sm:p-8 bg-white shadow-md mb-8">
-  <nav class="flex justify-between items-center mx-auto gap-16">
-    <div><a href="/" class="no-underline">{SITE_TITLE}</a></div>
+<header class="p-4 sm:p-8 mb-24">
+  <nav class="flex justify-between items-center mx-auto">
+    <div class="-rotate-2">
+      <a
+        href="/"
+        class="no-underline font-semibold text-3xl tracking-widest
+      bg-black text-white px-2"
+        >{SITE_TITLE}</a
+      >
+    </div>
     <div class="internal-links flex gap-4">
       <HeaderLink href="/blog">Blog</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
@@ -41,6 +48,7 @@ import HeaderLink from "./HeaderLink.astro";
     </div>
   </nav>
 </header>
+
 <!-- <style>
   h2 a,
   h2 a.active {

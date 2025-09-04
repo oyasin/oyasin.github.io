@@ -2,8 +2,9 @@
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
-
 import "../styles/global.css";
+import "@fontsource/ibm-plex-mono";
+
 const { title, description, pubDate, heroImage } = Astro.props;
 ---
 
@@ -13,11 +14,17 @@ const { title, description, pubDate, heroImage } = Astro.props;
     <BaseHead title={title} description={description} />
   </head>
 
-  <body>
+  <body class="max-w-3xl mx-auto">
     <Header />
-    <main class="prose lg:prose-lg max-w-2xl mx-auto min-h-screen px-8">
+    <main class="prose lg:prose-lg prose-img:rounded-lg px-8">
       <slot />
     </main>
     <Footer />
   </body>
 </html>
+
+<style>
+  body {
+    font-family: "IBM Plex Mono", monospace;
+  }
+</style>
