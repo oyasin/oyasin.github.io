@@ -1,39 +1,72 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 import "../../styles/global.css";
 import MainLayout from "../../layouts/MainLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getAllPosts, getAllYears } from "../../utils/blogHelpers";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getAllPosts();
+const years = await getAllYears();
 ---
 
 <MainLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <section>
-    <div>
-      {
-        posts.map((post) => (
-          <div>
-            <a href={`/blog/${post.id}/`}>
-              {post.data.heroImage && (
-                <Image
-                  width={720}
-                  height={360}
-                  src={post.data.heroImage}
-                  alt=""
-                />
-              )}
-              <h4 class="title">{post.data.title}</h4>
-            </a>
-            <p class="date">
-              <FormattedDate date={post.data.pubDate} />
-            </p>
-          </div>
-        ))
-      }
-    </div>
+  <section class="flex mx-auto gap-4 mb-8">
+    <button
+      data-year="all"
+      class="year-btn px-4 py-2 bg-black text-white rounded hover:bg-gray-300 active"
+    >
+      All Posts
+    </button>
+    {
+      years.map((year) => (
+        <button
+          data-year={year}
+          class="year-btn px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded font-semibold"
+        >
+          {year}
+        </button>
+      ))
+    }
+  </section>
+
+  <section id="posts-container" class="space-y-6">
+    {
+      posts.map((post) => (
+        <div class="post-item" data-year={post.data.pubDate.getFullYear()}>
+          <PostCard post={post} withImage={false} />
+        </div>
+      ))
+    }
   </section>
 </MainLayout>
+
+<script>
+  const yearButtons = document.querySelectorAll<HTMLButtonElement>(".year-btn");
+  const postItems = document.querySelectorAll<HTMLDivElement>(".post-item");
+
+  yearButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedYear = button.dataset.year;
+
+      // Update active button
+      yearButtons.forEach((btn) =>
+        btn.classList.remove("bg-black", "text-white", "active")
+      );
+      yearButtons.forEach((btn) =>
+        btn.classList.add("bg-gray-200", "hover:bg-gray-300")
+      );
+      button.classList.remove("bg-gray-200", "hover:bg-gray-300");
+      button.classList.add("bg-black", "text-white", "active");
+
+      // Filter posts
+      postItems.forEach((post) => {
+        if (selectedYear === "all" || post.dataset.year === selectedYear) {
+          post.style.display = "block";
+        } else {
+          post.style.display = "none";
+        }
+      });
+    });
+  });
+</script>

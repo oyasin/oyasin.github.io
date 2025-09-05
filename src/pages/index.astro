@@ -1,11 +1,9 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import PostCard from "../components/PostCard.astro";
-import { getCollection } from "astro:content";
+import { getRecentPosts } from "../utils/blogHelpers.ts";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getRecentPosts();
 ---
 
 <MainLayout>
@@ -19,6 +17,6 @@ const posts = (await getCollection("blog")).sort(
   </main>
   <section>
     <h2 class="font-semibold">Recent Posts</h2>
-    {posts.slice(0, 3).map((post) => <PostCard post={post} />)}
+    {posts.map((post) => <PostCard post={post} withImage={false} />)}
   </section>
 </MainLayout>
