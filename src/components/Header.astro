@@ -3,36 +3,87 @@ import { SITE_TITLE } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 ---
 
-<header class="p-8 mb-16">
+<header
+  class="sticky top-0 z-50 p-8 mb-16 bg-white transition-transform duration-300 ease-in-out"
+  id="header"
+>
   <nav class="grid grid-cols-2 items-center gap-8">
     <div class="-rotate-2">
       <a
         href="/"
-        class="no-underline font-semibold text-3xl tracking-widest
-      bg-black text-white px-2"
-        >{SITE_TITLE}</a
+        class="no-underline font-semibold text-3xl tracking-widest bg-black text-white px-2"
       >
+        {SITE_TITLE}
+      </a>
     </div>
     <div class="internal-links flex gap-8 justify-end">
+      <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
     </div>
   </nav>
 </header>
 
-<!-- <style>
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
+<script>
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  let isHeaderVisible = true;
+  let upwardScroll = 0;
+  const SCROLL_THRESHOLD = 150; // Minimum scroll distance before hiding
+  const SHOW_THRESHOLD = 120; // Increased threshold for showing
+  const MIN_SCROLL_DELTA = 8; // Minimum scroll per frame to register
+
+  function updateHeader() {
+    const header = document.getElementById("header");
+    if (!header) return;
+
+    const currentScrollY = window.scrollY;
+    const scrollDifference = currentScrollY - lastScrollY;
+
+    // Always show when near top
+    if (currentScrollY <= 100) {
+      header.style.transform = "translateY(0)";
+      isHeaderVisible = true;
+      upwardScroll = 0;
+      lastScrollY = currentScrollY;
+      ticking = false;
+      return;
+    }
+
+    // Only act if we've scrolled enough
+    if (Math.abs(scrollDifference) < MIN_SCROLL_DELTA) {
+      ticking = false;
+      return;
+    }
+
+    if (scrollDifference > 0) {
+      // Scrolling down - reset upward scroll counter
+      upwardScroll = 0;
+      if (currentScrollY > SCROLL_THRESHOLD && isHeaderVisible) {
+        header.style.transform = "translateY(-100%)";
+        isHeaderVisible = false;
+      }
+    } else {
+      // Scrolling up - accumulate upward scroll only when header is hidden
+      if (!isHeaderVisible) {
+        upwardScroll += Math.abs(scrollDifference);
+        if (upwardScroll > SHOW_THRESHOLD) {
+          header.style.transform = "translateY(0)";
+          isHeaderVisible = true;
+          upwardScroll = 0;
+        }
+      }
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
   }
 
-  nav a {
-    padding: 1em 0.5em;
-    color: var(--black);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
   }
-  nav a.active {
-    text-decoration: none;
-    border-bottom-color: var(--accent);
-  }
-</style> -->
+
+  window.addEventListener("scroll", onScroll);
+</script>

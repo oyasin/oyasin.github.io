@@ -14,7 +14,7 @@ const years = await getAllYears();
   <section class="flex mx-auto gap-4 mb-8">
     <button
       data-year="all"
-      class="year-btn px-4 py-2 bg-black text-white rounded hover:bg-gray-300 active"
+      class="year-btn px-2 py-1 bg-black text-white rounded hover:bg-gray-800 active text-sm transition-colors"
     >
       All Posts
     </button>
@@ -22,7 +22,7 @@ const years = await getAllYears();
       years.map((year) => (
         <button
           data-year={year}
-          class="year-btn px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded font-semibold"
+          class="year-btn px-2 py-1 bg-gray-200 text-gray-800 hover:bg-gray-300 rounded font-semibold text-sm transition-colors"
         >
           {year}
         </button>
@@ -50,14 +50,17 @@ const years = await getAllYears();
       const selectedYear = button.dataset.year;
 
       // Update active button
-      yearButtons.forEach((btn) =>
-        btn.classList.remove("bg-black", "text-white", "active")
+      yearButtons.forEach((btn) => {
+        btn.classList.remove("bg-black", "text-white", "hover:bg-gray-800");
+        btn.classList.add("bg-gray-200", "text-gray-800", "hover:bg-gray-300");
+      });
+
+      button.classList.remove(
+        "bg-gray-200",
+        "text-gray-800",
+        "hover:bg-gray-300"
       );
-      yearButtons.forEach((btn) =>
-        btn.classList.add("bg-gray-200", "hover:bg-gray-300")
-      );
-      button.classList.remove("bg-gray-200", "hover:bg-gray-300");
-      button.classList.add("bg-black", "text-white", "active");
+      button.classList.add("bg-black", "text-white", "hover:bg-gray-800");
 
       // Filter posts
       postItems.forEach((post) => {
