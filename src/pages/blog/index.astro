@@ -14,7 +14,7 @@ const years = await getAllYears();
   <section class="flex mx-auto gap-4 mb-8">
     <button
       data-year="all"
-      class="year-btn px-2 py-1 bg-black text-white rounded hover:bg-gray-800 active text-sm transition-colors"
+      class="year-btn px-2 py-1 bg-black text-white rounded hover:bg-gray-300 active text-sm transition-colors"
     >
       All Posts
     </button>
@@ -22,7 +22,7 @@ const years = await getAllYears();
       years.map((year) => (
         <button
           data-year={year}
-          class="year-btn px-2 py-1 bg-gray-200 text-gray-800 hover:bg-gray-300 rounded font-semibold text-sm transition-colors"
+          class="year-btn px-2 py-1 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded text-sm transition-colors"
         >
           {year}
         </button>

@@ -1,89 +1,43 @@
 ---
-import { SITE_TITLE } from "../consts";
-import HeaderLink from "./HeaderLink.astro";
+
 ---
 
-<header
-  class="sticky top-0 z-50 p-8 mb-16 bg-white transition-transform duration-300 ease-in-out"
-  id="header"
->
-  <nav class="grid grid-cols-2 items-center gap-8">
-    <div class="-rotate-2">
-      <a
-        href="/"
-        class="no-underline font-semibold text-3xl tracking-widest bg-black text-white px-2"
+<header>
+  <nav
+    class="flex items-center justify-between mx-auto px-8 py-8 mb-4 sm:mb-12"
+  >
+    <a
+      href="/"
+      class="bg-black text-white px-2 text-5xl font-semibold tracking-tighter -rotate-2"
+      >Yasin</a
+    >
+    <div class="flex items-center gap-4 text-sm text-gray-700">
+      <button onclick="location.href='/'" class="cursor-pointer"> Home </button>
+      <button onclick="location.href='/blog'" class="cursor-pointer">
+        Blog
+      </button>
+      <button onclick="location.href='/about'" class="cursor-pointer">
+        About
+      </button>
+    </div>
+    <!-- <button
+      onclick="history.back()"
+      class="flex items-center gap-2 text-sm no-underline cursor-pointer bg-transparent rounded p-2 border border-gray-900"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-4"
       >
-        {SITE_TITLE}
-      </a>
-    </div>
-    <div class="internal-links flex gap-8 justify-end">
-      <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-    </div>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"></path>
+      </svg>
+      Go Back
+    </button> -->
   </nav>
 </header>
-
-<script>
-  let lastScrollY = window.scrollY;
-  let ticking = false;
-  let isHeaderVisible = true;
-  let upwardScroll = 0;
-  const SCROLL_THRESHOLD = 150; // Minimum scroll distance before hiding
-  const SHOW_THRESHOLD = 120; // Increased threshold for showing
-  const MIN_SCROLL_DELTA = 8; // Minimum scroll per frame to register
-
-  function updateHeader() {
-    const header = document.getElementById("header");
-    if (!header) return;
-
-    const currentScrollY = window.scrollY;
-    const scrollDifference = currentScrollY - lastScrollY;
-
-    // Always show when near top
-    if (currentScrollY <= 100) {
-      header.style.transform = "translateY(0)";
-      isHeaderVisible = true;
-      upwardScroll = 0;
-      lastScrollY = currentScrollY;
-      ticking = false;
-      return;
-    }
-
-    // Only act if we've scrolled enough
-    if (Math.abs(scrollDifference) < MIN_SCROLL_DELTA) {
-      ticking = false;
-      return;
-    }
-
-    if (scrollDifference > 0) {
-      // Scrolling down - reset upward scroll counter
-      upwardScroll = 0;
-      if (currentScrollY > SCROLL_THRESHOLD && isHeaderVisible) {
-        header.style.transform = "translateY(-100%)";
-        isHeaderVisible = false;
-      }
-    } else {
-      // Scrolling up - accumulate upward scroll only when header is hidden
-      if (!isHeaderVisible) {
-        upwardScroll += Math.abs(scrollDifference);
-        if (upwardScroll > SHOW_THRESHOLD) {
-          header.style.transform = "translateY(0)";
-          isHeaderVisible = true;
-          upwardScroll = 0;
-        }
-      }
-    }
-
-    lastScrollY = currentScrollY;
-    ticking = false;
-  }
-
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  }
-
-  window.addEventListener("scroll", onScroll);
-</script>
