@@ -1,0 +1,68 @@
+<!-- Mobile Navigation -->
+<nav class="md:hidden mb-8">
+  <div class="flex items-center justify-between px-4 py-2">
+    <a href="/" class="text-4xl font-extrabold">Yasin</a>
+    <button
+      id="mobile-menu-button"
+      type="button"
+      class="p-2 rounded-md flex flex-col justify-center items-center gap-1.5"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <!-- three bars for animated hamburger -> X -->
+      <span
+        class="bar bar1 block w-6 h-0.5 bg-current transition-transform duration-100 ease-in-out"
+      ></span>
+      <span
+        class="bar bar2 block w-6 h-0.5 bg-current transition-opacity duration-100 ease-in-out"
+      ></span>
+      <span
+        class="bar bar3 block w-6 h-0.5 bg-current transition-transform duration-100 ease-in-out"
+      ></span>
+    </button>
+  </div>
+
+  <!-- hidden mobile menu - toggled by the button above -->
+  <div id="mobile-menu" class="hidden bg-gray-50 overflow-auto h-[50svh]">
+    <div
+      class="flex flex-col items-center justify-around h-full font-medium text-lg"
+    >
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+
+  <!-- small script to toggle the menu and animate the hamburger -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("mobile-menu-button");
+      const menu = document.getElementById("mobile-menu");
+      if (!btn || !menu) return;
+
+      // Toggle menu visibility and animate hamburger -> X
+      btn.addEventListener("click", function () {
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", String(!expanded));
+        menu.classList.toggle("hidden");
+        btn.classList.toggle("open");
+      });
+    });
+  </script>
+
+  <style>
+    /* transform the three bars into an X when the button has .open */
+    #mobile-menu-button.open .bar1 {
+      transform: translateY(8px) rotate(45deg);
+    }
+    #mobile-menu-button.open .bar2 {
+      opacity: 0;
+      transform: scaleX(0); /* Keeping scaleX(0) for a nice "shrink" effect */
+    }
+    #mobile-menu-button.open .bar3 {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+  </style>
+</nav>

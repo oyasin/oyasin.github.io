@@ -1,2 +1,61 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/typography';
+@import "tailwindcss";
+
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GeistMono";
+  src: url("/fonts/GeistMono[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-mono: "GeistMono", monospace;
+  --font-sans: "Geist", sans-serif;
+}
+/* Apply the custom font family to the body element. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: #171717;
+  @apply antialiased;
+}
+
+@layer base {
+  h1 {
+    @apply scroll-m-20 text-4xl font-extrabold tracking-tight text-balance;
+  }
+  h2 {
+    @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+  }
+  h3 {
+    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+  }
+
+  h4 {
+    @apply scroll-m-20 text-xl font-semibold tracking-tight;
+  }
+
+  p {
+    @apply leading-7 [&:not(:first-child)]:mt-6;
+  }
+
+  blockquote {
+    @apply mt-6 border-l-2 pl-6 italic;
+  }
+  ul {
+    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  }
+  code {
+    background-color: oklch(97% 0 0);
+    @apply rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+  }
+}
