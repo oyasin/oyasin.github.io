@@ -1,68 +1,119 @@
 <!-- Mobile Navigation -->
-<nav class="md:hidden mb-8">
+<nav
+  id="mobile-nav-bar"
+  class="md:hidden mb-8 transition-all duration-300 ease-in-out"
+>
   <div class="flex items-center justify-between px-4 py-2">
     <a href="/" class="text-4xl font-extrabold">Yasin</a>
     <button
       id="mobile-menu-button"
       type="button"
-      class="p-2 rounded-md flex flex-col justify-center items-center gap-1.5"
+      class="p-2 rounded-md flex flex-col justify-center items-center gap-1.5 group"
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
-      <!-- three bars for animated hamburger -> X -->
       <span
-        class="bar bar1 block w-6 h-0.5 bg-current transition-transform duration-100 ease-in-out"
+        class="bar bar1 block w-6 h-0.5 bg-current transition-transform duration-300 ease-in-out
+           group-[.open]:translate-y-2 group-[.open]:rotate-45"
       ></span>
+
       <span
-        class="bar bar2 block w-6 h-0.5 bg-current transition-opacity duration-100 ease-in-out"
+        class="bar bar2 block w-6 h-0.5 bg-current transition-opacity duration-200 ease-in-out
+           group-[.open]:opacity-0 group-[.open]:scale-x-0"
       ></span>
+
       <span
-        class="bar bar3 block w-6 h-0.5 bg-current transition-transform duration-100 ease-in-out"
+        class="bar bar3 block w-6 h-0.5 bg-current transition-transform duration-300 ease-in-out
+           group-[.open]:-translate-y-2 group-[.open]:-rotate-45"
       ></span>
     </button>
   </div>
 
-  <!-- hidden mobile menu - toggled by the button above -->
-  <div id="mobile-menu" class="hidden bg-gray-50 overflow-auto h-[50svh]">
-    <div
-      class="flex flex-col items-center justify-around h-full font-medium text-lg"
-    >
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/projects">Projects</a>
-      <a href="/contact">Contact</a>
+  <div
+    id="mobile-menu"
+    class="overflow-hidden
+            transition-[max-height,opacity] duration-300 ease-in-out
+            max-h-0 opacity-0 pointer-events-none"
+    aria-hidden="true"
+  >
+    <div class="flex flex-col items-center justify-around h-[50svh]">
+      <a href="/" class="block text-lg font-medium">Home</a>
+      <a href="/about" class="block text-lg font-medium">About</a>
+      <a href="/projects" class="block text-lg font-medium">Projects</a>
+      <a href="/contact" class="block text-lg font-medium">Contact</a>
     </div>
   </div>
-
-  <!-- small script to toggle the menu and animate the hamburger -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const btn = document.getElementById("mobile-menu-button");
-      const menu = document.getElementById("mobile-menu");
-      if (!btn || !menu) return;
-
-      // Toggle menu visibility and animate hamburger -> X
-      btn.addEventListener("click", function () {
-        const expanded = btn.getAttribute("aria-expanded") === "true";
-        btn.setAttribute("aria-expanded", String(!expanded));
-        menu.classList.toggle("hidden");
-        btn.classList.toggle("open");
-      });
-    });
-  </script>
-
-  <style>
-    /* transform the three bars into an X when the button has .open */
-    #mobile-menu-button.open .bar1 {
-      transform: translateY(8px) rotate(45deg);
-    }
-    #mobile-menu-button.open .bar2 {
-      opacity: 0;
-      transform: scaleX(0); /* Keeping scaleX(0) for a nice "shrink" effect */
-    }
-    #mobile-menu-button.open .bar3 {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-  </style>
 </nav>
+
+<!-- updated script: toggle Tailwind utility classes on bars and menu -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    const nav = document.getElementById("mobile-nav-bar");
+    const MD_BREAKPOINT = 768; // Tailwind's default 'md' breakpoint
+
+    if (!btn || !menu || !nav) return;
+
+    // --- Function to open the menu ---
+    function openMenu() {
+      // Apply 'open' class for icon animation
+      btn?.classList.add("open");
+
+      // Open menu visually
+      menu?.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
+      menu?.classList.add(
+        "max-h-[50svh]",
+        "opacity-100",
+        "pointer-events-auto"
+      );
+      nav?.classList.add("bg-gray-100");
+
+      // Update ARIA attributes
+      btn?.setAttribute("aria-expanded", "true");
+      menu?.setAttribute("aria-hidden", "false");
+    }
+
+    // --- Function to close the menu ---
+    function closeMenu() {
+      if (btn?.getAttribute("aria-expanded") === "true") {
+        // Revert icon to hamburger
+        btn.classList.remove("open");
+
+        // Close menu visually
+        menu?.classList.add("max-h-0", "opacity-0", "pointer-events-none");
+        menu?.classList.remove(
+          "max-h-[50svh]",
+          "opacity-100",
+          "pointer-events-auto"
+        );
+
+        nav?.classList.remove("bg-gray-100");
+        // Update ARIA attributes
+        btn.setAttribute("aria-expanded", "false");
+        menu?.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    // --- Resize Event Listener: Close menu on desktop transition ---
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= MD_BREAKPOINT) {
+        closeMenu();
+      }
+    });
+
+    // --- Click Event Listener: Toggle logic is now concise ---
+    btn.addEventListener("click", function () {
+      const isExpanded = btn.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        // If currently open, close it
+        closeMenu();
+      } else {
+        // If currently closed, open it
+        openMenu();
+      }
+    });
+  });
+</script>
