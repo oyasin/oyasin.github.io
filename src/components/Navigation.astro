@@ -1,10 +1,15 @@
+---
+import { SITE_TITLE } from "../utils/constants";
+import { NavigationLinks } from "../utils/constants";
+---
+
 <!-- Mobile Navigation -->
 <nav
   id="mobile-nav-bar"
-  class="md:hidden mb-8 transition-all duration-300 ease-in-out"
+  class="md:hidden mb-8 transition-all h-16 bg-red-500 duration-300 ease-in-out"
 >
   <div class="flex items-center justify-between px-4 py-2">
-    <a href="/" class="text-4xl font-extrabold">Yasin</a>
+    <a href="/" class="text-4xl font-extrabold">{SITE_TITLE}</a>
     <button
       id="mobile-menu-button"
       type="button"
@@ -38,82 +43,44 @@
     aria-hidden="true"
   >
     <div class="flex flex-col items-center justify-around h-[50svh]">
-      <a href="/" class="block text-lg font-medium">Home</a>
-      <a href="/about" class="block text-lg font-medium">About</a>
-      <a href="/projects" class="block text-lg font-medium">Projects</a>
-      <a href="/contact" class="block text-lg font-medium">Contact</a>
+      {
+        NavigationLinks.map((link) => (
+          <a href={link.href} class="block text-lg font-medium">
+            {link.name}
+          </a>
+        ))
+      }
     </div>
   </div>
 </nav>
 
-<!-- updated script: toggle Tailwind utility classes on bars and menu -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("mobile-menu-button");
-    const menu = document.getElementById("mobile-menu");
-    const nav = document.getElementById("mobile-nav-bar");
-    const MD_BREAKPOINT = 768; // Tailwind's default 'md' breakpoint
-
-    if (!btn || !menu || !nav) return;
-
-    // --- Function to open the menu ---
-    function openMenu() {
-      // Apply 'open' class for icon animation
-      btn?.classList.add("open");
-
-      // Open menu visually
-      menu?.classList.remove("max-h-0", "opacity-0", "pointer-events-none");
-      menu?.classList.add(
-        "max-h-[50svh]",
-        "opacity-100",
-        "pointer-events-auto"
-      );
-      nav?.classList.add("bg-gray-100");
-
-      // Update ARIA attributes
-      btn?.setAttribute("aria-expanded", "true");
-      menu?.setAttribute("aria-hidden", "false");
-    }
-
-    // --- Function to close the menu ---
-    function closeMenu() {
-      if (btn?.getAttribute("aria-expanded") === "true") {
-        // Revert icon to hamburger
-        btn.classList.remove("open");
-
-        // Close menu visually
-        menu?.classList.add("max-h-0", "opacity-0", "pointer-events-none");
-        menu?.classList.remove(
-          "max-h-[50svh]",
-          "opacity-100",
-          "pointer-events-auto"
-        );
-
-        nav?.classList.remove("bg-gray-100");
-        // Update ARIA attributes
-        btn.setAttribute("aria-expanded", "false");
-        menu?.setAttribute("aria-hidden", "true");
+<!-- Desktop Navigation -->
+<nav id="desktop-nav-bar" class="hidden md:flex bg-red-400 mb-8 h-16 px-4 py-2">
+  <a href="/" class="text-4xl font-extrabold">{SITE_TITLE}</a>
+  <div class="flex gap-8 items-center justify-center w-full">
+    <div class="flex items-center gap-8">
+      {
+        NavigationLinks.map((link) => (
+          <a href={link.href} class="text-md hover:underline">
+            {link.name}
+          </a>
+        ))
       }
-    }
+    </div>
+    <!-- <div>
+    <form role="search" action="/search" method="GET" class="flex items-center">
+      <label for="site-search" class="sr-only">Search the site</label>
+      <input
+        id="site-search"
+        name="q"
+        type="search"
+        placeholder="Search..."
+        class="w-48 bg-white border border-gray-200 rounded-md px-3 py-1 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+    </form>
+  </div> -->
+  </div>
 
-    // --- Resize Event Listener: Close menu on desktop transition ---
-    window.addEventListener("resize", () => {
-      if (window.innerWidth >= MD_BREAKPOINT) {
-        closeMenu();
-      }
-    });
-
-    // --- Click Event Listener: Toggle logic is now concise ---
-    btn.addEventListener("click", function () {
-      const isExpanded = btn.getAttribute("aria-expanded") === "true";
-
-      if (isExpanded) {
-        // If currently open, close it
-        closeMenu();
-      } else {
-        // If currently closed, open it
-        openMenu();
-      }
-    });
-  });
-</script>
+  <!-- include the external script that controls the mobile menu -->
+  <script src="../scripts/mobile-nav-menu.js"></script>
+</nav>
