@@ -1,61 +1,69 @@
 @import "tailwindcss";
+@import "./typography.css";
 
-/* Register your custom font family and tell the browser where to find it. */
-@font-face {
-  font-family: "Geist";
-  src: url("/fonts/Geist[wght].woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "GeistMono";
-  src: url("/fonts/GeistMono[wght].woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #fdfdfd;
+  --foreground: #282728;
+  --accent: #006cac;
+  --muted: #e6e6e6;
+  --border: #ece9e9;
 }
 
-@theme {
-  --font-mono: "GeistMono", monospace;
-  --font-sans: "Geist", sans-serif;
+html[data-theme="dark"] {
+  --background: #212737;
+  --foreground: #eaedf3;
+  --accent: #ff6b01;
+  --muted: #343f60;
+  --border: #ab4b08;
 }
-/* Apply the custom font family to the body element. */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  color: #171717;
-  @apply antialiased;
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
 }
 
 @layer base {
-  h1 {
-    @apply scroll-m-20 text-4xl font-extrabold tracking-tight text-balance;
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
   }
-  h2 {
-    @apply scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0;
+  html {
+    @apply overflow-y-scroll scroll-smooth;
   }
-  h3 {
-    @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+  body {
+    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
   }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section,
+  footer {
+    @apply mx-auto max-w-app px-4;
+  }
+}
 
-  h4 {
-    @apply scroll-m-20 text-xl font-semibold tracking-tight;
-  }
+@utility max-w-app {
+  @apply max-w-3xl;
+}
 
-  p {
-    @apply leading-7 [&:not(:first-child)]:mt-6;
-  }
+.active-nav {
+  @apply underline decoration-wavy decoration-2 underline-offset-4;
+}
 
-  blockquote {
-    @apply mt-6 border-l-2 pl-6 italic;
-  }
-  ul {
-    @apply my-6 ml-6 list-disc [&>li]:mt-2;
-  }
-  code {
-    background-color: oklch(97% 0 0);
-    @apply rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
-  }
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
 }
