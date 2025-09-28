@@ -1,15 +1,32 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistMono";
+  src: url("/fonts/GeistMono[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
 html[data-theme="light"] {
   --background: #fdfdfd;
-  --foreground: #282728;
+  --foreground: #171717;
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+  --font-family: "Geist", sans-serif;
 }
 
 html[data-theme="dark"] {
@@ -38,7 +55,7 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply flex min-h-svh flex-col bg-background antialiased text-foreground selection:bg-accent/75 selection:text-background;
   }
   a,
   button {
@@ -48,6 +65,7 @@ html[data-theme="dark"] {
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   section,
   footer {
     @apply mx-auto max-w-app px-4;
@@ -59,7 +77,7 @@ html[data-theme="dark"] {
 }
 
 .active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
+  @apply underline decoration-dashed decoration-1 decoration-accent underline-offset-4;
 }
 
 /* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
