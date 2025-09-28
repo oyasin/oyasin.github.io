@@ -25,9 +25,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Marhaba!
+        Marhaban!
       </h1>
-      <a
+      <!-- <a
         target="_blank"
         href="/rss.xml"
         class="inline-block"
@@ -40,12 +40,12 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
         />
         <span class="sr-only">RSS Feed</span>
-      </a>
+      </a> -->
 
       <p>
-        I am Omar Yasin, a mathematician by training, software developer, and
-        tech enthusiast. Welcome to my personal blog where I share my thoughts
-        on mathematics, technology and programming.
+        I am Omar Yasin, a mathematician by training. Welcome to my personal
+        blog where I share my thoughts on mathematics, technology and
+        programming.
       </p>
       <p class="mt-2">
         Read a blog post or check
@@ -56,7 +56,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           About
         </LinkButton> for more info.
       </p>
-      {
+      <!-- {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
@@ -64,7 +64,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             <Socials />
           </div>
         )
-      }
+      } -->
     </section>
 
     <Hr />
